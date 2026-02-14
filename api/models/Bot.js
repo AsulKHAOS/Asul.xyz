@@ -9,12 +9,3 @@ module.exports = mongoose.model("Bot", new mongoose.Schema({
   economy: Object,
   moderation: Object
 }));
-
-{
-  "name": "Economia Pro",
-  "description": "Sistema completo de economia",
-  "commands": [
-    { "name": "balance", "description": "Ver saldo", "type": "balance" },
-    { "name": "work", "description": "Trabalhar", "type": "work" }
-  ]
-}
