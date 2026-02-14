@@ -11,3 +11,6 @@
     "fs-extra": "^11.2.0"
   }
 }
+"scripts": {
+  "start": "node api/server.js"
+}
