@@ -18,3 +18,16 @@ app.use(express.json());
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB conectado"))
   .catch(err => console.error("Erro Mongo:", err));
+/* ============================= */
+/* SERVIDOR */
+/* ============================= */
+
+app.get("/", (req, res) => {
+  res.send("API funcionando 🚀");
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`API rodando na porta ${PORT}`);
+});
