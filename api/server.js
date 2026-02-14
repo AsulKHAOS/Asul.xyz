@@ -1,24 +1,21 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const Bot = require("./models/Bot");
-const { startBot } = require("../bot/botManager");
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-mongoose.connect("mongodb://127.0.0.1/discordSaaS");
-
-app.post("/bot/create", async (req,res)=>{
-  const bot = await Bot.create(req.body);
-  await startBot(bot);
-  res.json({status:"online"});
-});
+const registerSlash = require("../bot/registerSlash");
 
 app.post("/bot/:id/command", async (req,res)=>{
   const bot = await Bot.findById(req.params.id);
-  bot.commands.push(req.body);
+
+  bot.commands.push({
+    name: req.body.name,
+    description: req.body.description,
+    type: req.body.type || "reply",
+    response: req.body.response
+  });
+
+  await bot.save();
+  await registerSlash(bot);
+
+  res.json({status:"command added & registered"});
+});
+
   await bot.save();
   res.json({status:"command added"});
 });
