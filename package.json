@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "api/server.js",
   "type": "commonjs",
+  "scripts": {
+    "start": "node api/server.js"
+  },
   "dependencies": {
     "discord.js": "^14.14.1",
     "express": "^4.18.2",
@@ -10,10 +13,4 @@
     "cors": "^2.8.5",
     "fs-extra": "^11.2.0"
   }
-}
-"scripts": {
-  "start": "node api/server.js"
-}
-"scripts": {
-  "start": "node api/server.js"
 }
