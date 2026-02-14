@@ -29,3 +29,5 @@ async function startBot(botData) {
 }
 
 module.exports = { startBot, bots };
+const registerSlash = require("./registerSlash");
+
