@@ -1,42 +1,22 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+
+const Bot = require("./models/Bot");
+const Plugin = require("./models/Plugin");
 const registerSlash = require("../bot/registerSlash");
 
-app.post("/bot/:id/command", async (req,res)=>{
-  const bot = await Bot.findById(req.params.id);
+const app = express();
 
-  bot.commands.push({
-    name: req.body.name,
-    description: req.body.description,
-    type: req.body.type || "reply",
-    response: req.body.response
-  });
+app.use(cors());
+app.use(express.json());
 
-  await bot.save();
-  await registerSlash(bot);
+/* ============================= */
+/* CONEXÃO MONGODB */
+/* ============================= */
 
-  res.json({status:"command added & registered"});
-});
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB conectado"))
+  .catch(err => console.error("Erro Mongo:", err));
 
-  await bot.save();
-  res.json({status:"command added"});
-});
-
-app.listen(3000, ()=>console.log("API rodando"));
-
-const Plugin = require("./models/Plugin");
-
-app.get("/plugins", async (req,res)=>{
-  const plugins = await Plugin.find();
-  res.json(plugins);
-});
-
-app.post("/bot/:botId/install/:pluginId", async (req,res)=>{
-  const bot = await Bot.findById(req.params.botId);
-  const plugin = await Plugin.findById(req.params.pluginId);
-
-  bot.commands.push(...plugin.commands);
-
-  await bot.save();
-  await registerSlash(bot);
-
-  res.json({status:"plugin installed"});
-});
+/* ===*
